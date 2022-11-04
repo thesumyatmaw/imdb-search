@@ -1,10 +1,10 @@
 describe('Search functions Test Suite for IMDB', () => {
-  before(() => {
-    cy.visit('/')
-  })
+  // I use "before" to run once before all the testcases
 
   describe('Search by Movie names Test Cases', () => {
-    // I use "before" to run once before all the testcases
+    before(() => {
+      cy.visit('/')
+    })
 
     it('Go to the IMDB page and assert the search bar & search menu items', () => {
       const categories = [
@@ -86,10 +86,14 @@ describe('Search functions Test Suite for IMDB', () => {
     })
   })
 
-  //Search by TV Episodesfrom search menus that doesn't work on auto Complete in IMDB.
+  //Search by TV Episodes from search menus that doesn't work on auto Complete in IMDB.
   //So, to display TV Episodes search result I need to use Enter keyword.
   //Technical stuck : I cannot use cypress intercept.Because I didn't see network api call (Xhr/fetch) when I searched.
   describe('Search by TV Episodes Test Case', () => {
+    before(() => {
+      cy.visit('/')
+    })
+
     it('Select "TV Episodies" from search menu & search TV episodes', () => {
       cy.get('#home_img_holder')
       cy.get('#nav-search-form')
@@ -107,11 +111,20 @@ describe('Search functions Test Suite for IMDB', () => {
       )
       cy.get('input[type="text"]').type('Stranger Things{enter}')
       //Only check search result on the first row.
+      cy.get('#main')
       cy.get('.findSection', { timeout: 5000 })
       cy.get('table.findList')
         .find('tbody>tr>td.result_text')
         .eq(0)
         .should('contain', 'Stranger Things')
     })
+  })
+
+  describe('Search by Celebs Test Case', () => {
+    before(() => {
+      cy.visit('/')
+    })
+
+    it('Select "Celebs" from search menu & search Cele person', () => {})
   })
 })

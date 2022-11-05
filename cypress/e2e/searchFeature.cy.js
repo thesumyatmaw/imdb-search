@@ -1,7 +1,6 @@
 describe('Search functions Test Suite for IMDB', () => {
   describe('Search by Movie name Test Cases', () => {
-    // I use "before" to run once before all the testcases
-    before(() => {
+    beforeEach(() => {
       cy.visit('/')
     })
 
@@ -26,8 +25,6 @@ describe('Search functions Test Suite for IMDB', () => {
           cy.log($li.text())
           expect($li.text()).to.be.oneOf(categories)
         })
-      // To close search categories list, I clicked again.
-      cy.get('.ipc-button[for="navbar-search-category-select"]').click()
     })
 
     it('Type invalid keyword on the searchbar & check error message', () => {
@@ -85,15 +82,14 @@ describe('Search functions Test Suite for IMDB', () => {
     })
   })
 
-  //Search by TV Episodes from search menus that doesn't work on auto Complete in IMDB.
-  //So, to display TV Episodes search result I need to use Enter keyword.
-  //Technical stuck : I cannot use cypress intercept.Because I didn't see network api call (Xhr/fetch) when I searched.
   describe('Search by TV Episode Test Case', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit('/')
     })
 
     it('Select "TV Episodies" from search menu & search TV episodes', () => {
+      // Technical limitation : Cannot use cypress intercept in this test case.
+      // Because IMDB use document type server request instead of Xhr api network call.
       cy.get('#home_img_holder')
       cy.get('#nav-search-form')
       cy.get('.ipc-button[for="navbar-search-category-select"]').click()
@@ -108,19 +104,28 @@ describe('Search functions Test Suite for IMDB', () => {
         'aria-label',
         'TV Episodes'
       )
-      cy.get('input[type="text"]').type('Stranger Things{enter}')
-      //Only check search result on the first row.
-      cy.get('#main')
-      cy.get('.findSection', { timeout: 5000 })
-      cy.get('table.findList')
-        .find('tbody>tr>td.result_text')
-        .eq(0)
-        .should('contain', 'Stranger Things')
+      cy.get('input[type="text"]').type('Manifest{enter}')
+      // Assert the search result for the first row.
+      cy.get('body').then(($body) => {
+        if ($body.find('div[id="main"]').length > 0) {
+          cy.get('.findSection')
+          cy.get('table.findList')
+            .find('tbody>tr>td.result_text')
+            .eq(0)
+            .should('contain', 'Manifest')
+        } else {
+          cy.get('section[data-testid="find-results-section-title"]')
+          cy.get('ul.ipc-metadata-list')
+            .find('li')
+            .eq(0)
+            .should('contain', 'Manifest')
+        }
+      })
     })
   })
 
   describe('Search by Celeb Test Case', () => {
-    before(() => {
+    beforeEach(() => {
       cy.visit('/')
     })
 
@@ -162,6 +167,49 @@ describe('Search functions Test Suite for IMDB', () => {
         cy.get('h1', {
           timeout: 3000,
         }).should('contain', getceleb.l)
+      })
+    })
+  })
+
+  describe('Search by Companies Test Case', () => {
+    beforeEach(() => {
+      cy.visit('/')
+    })
+    it('Select "Companies" from search menu & search Companies name', () => {
+      // Technical limitation : Cannot use cypress intercept in this test case too.
+      // Because IMDB use document type server request instead of Xhr api network call.
+
+      cy.get('#home_img_holder')
+      cy.get('#nav-search-form')
+      cy.get('.ipc-button[for="navbar-search-category-select"]').click()
+      cy.get('.ipc-menu[role="presentation"]')
+      cy.get('ul.searchCatSelector')
+        .find('li[role="menuitem"]')
+        .eq(4)
+        .should('contain', 'Companies')
+        .click()
+      cy.get('.ipc-button[for="navbar-search-category-select"]').should(
+        'have.attr',
+        'aria-label',
+        'Companies'
+      )
+      cy.get('input[type="text"]').type('Marvel Studios{enter}')
+
+      // Assert the search result for the first row.
+      cy.get('body').then(($body) => {
+        if ($body.find('div[id="main"]').length > 0) {
+          cy.get('.findSection')
+          cy.get('table.findList')
+            .find('tbody>tr>td.result_text')
+            .eq(0)
+            .should('contain', 'Marvel Studios')
+        } else {
+          cy.get('section[data-testid="find-results-section-company"]')
+          cy.get('ul.ipc-metadata-list')
+            .find('li')
+            .eq(0)
+            .should('contain', 'Marvel Studios')
+        }
       })
     })
   })

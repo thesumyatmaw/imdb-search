@@ -1,4 +1,8 @@
 # imdb-search
+## Requirement
+Install Node js. (I installed v14.18.2)
+
+
 ## How to run the Cypress Test
 * Download the Zip file or clone
 * please go inside the automate testing folder from Terminal

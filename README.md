@@ -74,7 +74,7 @@ It was fine but for better consistent testing, I just want to improve this by pr
 When I was working on **Test case 5 (Select "TV Episodies" from search menu & search TV episodes)** , I found out that IMDB has a tricky issue which shows two different search result HTML contents randomly. And this only occurs in Cypress Browser.
 If I use the normal chrome broswer, I got the only one consistent search result. 
 
-Please see below screenshots for random result _
+Please see below screenshots for random result something _
 
 <img width="600" alt="Screen Shot 2565-11-04 at 9 01 12 PM" src="https://user-images.githubusercontent.com/53144137/200147267-6101a0a6-14af-4350-9f27-c6512f0b98a9.png">
 
@@ -82,6 +82,8 @@ Please see below screenshots for random result _
 
 This random behaviour is unpredictable and give difficulty to make the test successful.
 To sovle this issue, I used **Conditional Testing** by checking element existence on two different search result HTML content and assigned the respective test strategies for each of them.
+
+Trying to do integration ci
 
 
 

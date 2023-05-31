@@ -1,0 +1,30 @@
+{
+  "d": [
+    {
+      "i": {
+        "height": 1500,
+        "imageUrl": "https://m.media-amazon.com/images/I/314t8YNB69L.png",
+        "width": 1013
+      },
+      "id": "/awards-central",
+      "l": "Awards Central",
+      "s": "Coverage of the Oscars, Independent Spirit Awards, BAFTAs, Critics' Choice, SAGs and more"
+    },
+    {
+      "i": {
+        "height": 2000,
+        "imageUrl": "https://m.media-amazon.com/images/M/MV5BNDVkZTc4OTktNTAyOC00MzQxLThiZjMtM2M3MTlmYzFjY2FkXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg",
+        "width": 1350
+      },
+      "id": "tt9783600",
+      "l": "Spiderhead",
+      "q": "feature",
+      "qid": "movie",
+      "rank": 1044,
+      "s": "Chris Hemsworth, Miles Teller",
+      "y": 2022
+    }
+  ],
+  "q": "spi",
+  "v": 1
+}
